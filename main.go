@@ -222,8 +222,7 @@ func main() {
 	http.Handle(*metricsPath+"/", sh)
 	http.Handle(*metricsPath, promhttp.Handler())
 
-	srv := &http.Server{Addr: *listenAddress, ReadTimeout: 5 * time.Second, WriteTimeout: 5 * time.Second}
-	if err := srv.ListenAndServe(); err != nil {
-		log.Fatalf("Unable to setup HTTP server: %v", err)
+	if err := http.ListenAndServe(*listenAddress, nil); err != nil {
+		log.Fatal(err)
 	}
 }
